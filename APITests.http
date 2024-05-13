@@ -1,0 +1,119 @@
+GET {{host}}/festivos/verificar/2024/01/32
+Accept: application/json
+
+> {%
+    client.test("Fecha inválida", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Fecha no valida", "La fecha ingresada no debe ser válida")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/01/01
+Accept: application/json
+
+> {%
+    client.test("Festivo Fijo - Año nuevo", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/05/01
+Accept: application/json
+
+> {%
+    client.test("Festivo Fijo - Día del Trabajo", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/01/06
+Accept: application/json
+
+> {%
+    client.test("Puente Festivo - Santos Reyes", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "No es festivo", "No debe ser festivo hasta el siguiente lunes")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/01/08
+Accept: application/json
+
+> {%
+    client.test("Puente Festivo - Santos Reyes (Siguiente Lunes)", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/10/12
+Accept: application/json
+
+> {%
+    client.test("Puente Festivo - Dia de la Raza", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "No es festivo", "No debe ser festivo hasta el siguiente lunes")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/10/14
+Accept: application/json
+
+> {%
+    client.test("Puente Festivo - Dia de la Raza (Siguiente Lunes)", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/03/31
+Accept: application/json
+
+> {%
+    client.test("Basado en el Domingo de Pascua - Domingo de Resurrección", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/03/28
+Accept: application/json
+
+> {%
+    client.test("Basado en el Domingo de Pascua - Jueves Santo", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/05/30
+Accept: application/json
+
+> {%
+    client.test("Basado en el Domingo de Pascua con Puente Festivo - Corpus Christi", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "No es festivo", "No debe ser festivo hasta el siguiente lunes")
+    })
+%}
+
+###
+GET {{host}}/festivos/verificar/2024/06/03
+Accept: application/json
+
+> {%
+    client.test("Basado en el Domingo de Pascua con Puente Festivo - Corpus Christi (Siguiente Lunes)", () => {
+        client.assert(response.status === 200, "El status debe ser 200")
+        client.assert(response.body === "Es festivo", "Debe ser festivo")
+    })
+%}
