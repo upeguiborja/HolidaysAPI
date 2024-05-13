@@ -12,51 +12,51 @@ public class Holiday {
   @GenericGenerator(name = "holiday_id_seq", strategy = "increment")
   private int id;
 
-  @Column(name = "day", nullable = false)
-  private int day;
+  @Column(name = "day")
+  private Integer day;
 
-  @Column(name = "month", nullable = false)
-  private int month;
+  @Column(name = "month")
+  private Integer month;
 
-  @Column(name = "easter_day_offset", nullable = true)
-  private int easterDayOffset;
+  @Column(name = "easter_day_offset")
+  private Integer easterDayOffset;
 
   @Column(name = "name", nullable = false, length = 100)
   private String name;
 
   @ManyToOne
-  @JoinColumn(name = "type_id", referencedColumnName = "id")
+  @JoinColumn(name = "id_type", nullable = false, referencedColumnName = "id")
   private Type type;
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public int getDay() {
+  public Integer getDay() {
     return day;
   }
 
-  public void setDay(int day) {
+  public void setDay(Integer day) {
     this.day = day;
   }
 
-  public int getMonth() {
+  public Integer getMonth() {
     return month;
   }
 
-  public void setMonth(int month) {
+  public void setMonth(Integer month) {
     this.month = month;
   }
 
-  public int getEasterDayOffset() {
+  public Integer getEasterDayOffset() {
     return easterDayOffset;
   }
 
-  public void setEasterDayOffset(int easterDayOffset) {
+  public void setEasterDayOffset(Integer easterDayOffset) {
     this.easterDayOffset = easterDayOffset;
   }
 
@@ -68,8 +68,8 @@ public class Holiday {
     this.name = name;
   }
 
-  public Type getType() {
-    return type;
+  public HolidayType getType() {
+    return type.getType();
   }
 
   public void setType(Type type) {
