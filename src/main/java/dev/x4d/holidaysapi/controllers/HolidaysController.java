@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/festivos")
 public class HolidaysController {
-  private IHolidayService holidayService;
+  private final IHolidayService holidayService;
 
   public HolidaysController(@Autowired IHolidayService holidayService) {
     this.holidayService = holidayService;

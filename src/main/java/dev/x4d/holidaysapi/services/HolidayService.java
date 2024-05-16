@@ -49,8 +49,7 @@ public class HolidayService implements IHolidayService {
 
   private LocalDate getEasterBasedHolidayDate(Holiday holiday, int year) {
     LocalDate easterDate = getEasterDate(year);
-    LocalDate holidayDate = easterDate.plusDays(holiday.getEasterDayOffset());
-    return holidayDate;
+    return easterDate.plusDays(holiday.getEasterDayOffset());
   }
 
   private LocalDate getLongWeekendEasterBasedHolidayDate(Holiday holiday, int year) {

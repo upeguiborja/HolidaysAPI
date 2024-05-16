@@ -12,14 +12,14 @@ import java.util.List;
 // Todas las fechas se asumen en la zona horaria de Colombia (UTC-5:00)
 public interface IHolidayService {
   // Nos devuelve la lista de todos los festivos que tenemos en la base de datos
-  public List<Holiday> getHolidays();
+  List<Holiday> getHolidays();
 
   // Nos devuelve la lista de festivos de un año en concreto como objetos Date
-  public List<LocalDate> computeHolidayDates(int year);
+  List<LocalDate> computeHolidayDates(int year);
 
   // Convierte una cadena de texto en una fecha, si no válida lanza una excepción
-  public LocalDate parseDate(Integer year, Integer month, Integer day) throws DateTimeException;
+  LocalDate parseDate(Integer year, Integer month, Integer day) throws DateTimeException;
 
   // Determina si una fecha es festivo
-  public boolean isHoliday(LocalDate date);
+  boolean isHoliday(LocalDate date);
 }
