@@ -2,15 +2,14 @@ package dev.x4d.holidaysapi.controllers;
 
 import dev.x4d.holidaysapi.core.interfaces.services.IHolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/festivos")
+@CrossOrigin(origins = "http://localhost:4200", methods = RequestMethod.GET)
 public class HolidaysController {
   private final IHolidayService holidayService;
 
@@ -18,7 +17,7 @@ public class HolidaysController {
     this.holidayService = holidayService;
   }
 
-  @RequestMapping("/verificar/{year}/{month}/{day}")
+  @RequestMapping(value = "/verificar/{year}/{month}/{day}", method = RequestMethod.GET)
   public String verify(@PathVariable Integer year, @PathVariable Integer month, @PathVariable Integer day) {
     try {
       LocalDate parsedDate = holidayService.parseDate(year, month, day);
@@ -26,5 +25,10 @@ public class HolidaysController {
     } catch (DateTimeException e) {
       return "Fecha no valida";
     }
+  }
+
+  @RequestMapping(value = "/obtener/{year}", method = RequestMethod.GET)
+  public Object verify(@PathVariable Integer year) {
+    return holidayService.computeHolidays(year);
   }
 }

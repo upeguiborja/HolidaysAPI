@@ -3,6 +3,7 @@ package dev.x4d.holidaysapi.services;
 import dev.x4d.holidaysapi.core.entities.Holiday;
 import dev.x4d.holidaysapi.core.interfaces.repositories.IHolidayRepository;
 import dev.x4d.holidaysapi.core.interfaces.services.IHolidayService;
+import dev.x4d.holidaysapi.core.pojo.ComputedHoliday;
 import org.springframework.stereotype.Service;
 
 import java.time.DateTimeException;
@@ -62,30 +63,32 @@ public class HolidayService implements IHolidayService {
     return easterHolidayDate;
   }
 
-  @Override
-  public List<Holiday> getHolidays() {
-    return null;
-  }
-
 
   @Override
   public List<LocalDate> computeHolidayDates(int year) {
+    List<ComputedHoliday> computedHolidays = this.computeHolidays(year);
+    return computedHolidays.stream().map(holiday -> holiday.fecha).toList();
+  }
+
+  @Override
+  public List<ComputedHoliday> computeHolidays(int year) {
     List<Holiday> holidays = holidayRepository.findAll();
-    List<LocalDate> computedHolidays = new ArrayList<>();
+    List<ComputedHoliday> computedHolidays = new ArrayList<>();
 
     for (Holiday holiday : holidays) {
       switch (holiday.getType()) {
         case FIXED:
-          computedHolidays.add(getFixedHolidayDate(holiday, year));
+          computedHolidays.add(new ComputedHoliday(getFixedHolidayDate(holiday, year), holiday.getName()));
           break;
         case LONG_WEEKEND:
-          computedHolidays.add(getLongWeekendHolidayDate(holiday, year));
+          computedHolidays.add(new ComputedHoliday(getLongWeekendHolidayDate(holiday, year), holiday.getName()));
           break;
         case EASTER_BASED:
-          computedHolidays.add(getEasterBasedHolidayDate(holiday, year));
+          computedHolidays.add(new ComputedHoliday(getEasterBasedHolidayDate(holiday, year), holiday.getName()));
           break;
         case LONG_WEEKEND_EASTER_BASED:
-          computedHolidays.add(getLongWeekendEasterBasedHolidayDate(holiday, year));
+          computedHolidays.add(
+            new ComputedHoliday(getLongWeekendEasterBasedHolidayDate(holiday, year), holiday.getName()));
           break;
       }
     }
